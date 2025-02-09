@@ -5,6 +5,7 @@ const router=express.Router()
 
 
 router.get('/',HomeController.home);
+router.get('/about',HomeController.About);
 
 
 
