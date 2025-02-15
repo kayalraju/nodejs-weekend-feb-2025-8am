@@ -1,9 +1,11 @@
 const express = require("express");
 const ejs=require('ejs');
+const dotenv=require('dotenv');
+const connectDB=require('./app/config/db')
 
-
+dotenv.config();
 const app=express();
-
+connectDB()
 //set view engine
 app.set('view engine','ejs');
 app.set('views','views')
