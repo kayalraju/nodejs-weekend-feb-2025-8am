@@ -10,9 +10,19 @@ connectDB()
 app.set('view engine','ejs');
 app.set('views','views')
 
+//setup body parser
+app.use(express.json({
+    limit:'50mb',
+    extended:true
+}));
+
+app.use(express.urlencoded({extended:true}))
+
 const homeRoute=require('./app/router/homeRouter')
 app.use(homeRoute);
 
+const apiRoute=require('./app/router/ApiRoute')
+app.use('/api',apiRoute);
 
 const port=3005;
 
