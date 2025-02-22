@@ -1,15 +1,23 @@
+const { log } = require('console')
 const Student = require('../model/student')
+const fs = require('fs')
+const path = require('path')
+const slug = require('slugify')
 
 class ApiController {
 
     //create student
     async createStudent(req, res) {
         // console.log(req.body);
+        //console.log('file image',req.file);
         try {
             const { name, city, age } = req.body
             const data = new Student({
-                name, city, age
+                name, city, age, slug: slug(name)
             })
+            if (req.file) {
+                data.image = req.file.path
+            }
             const sData = await data.save()
             if (sData) {
                 return res.status(201).json({
@@ -50,6 +58,8 @@ class ApiController {
         }
 
     }
+
+    //edit student
     async editStudent(req, res) {
         try {
             const id = req.params.id
@@ -77,7 +87,7 @@ class ApiController {
 
     }
 
-
+    //update student
     async updateStudent(req, res) {
         try {
             const id = req.params.id
@@ -105,6 +115,7 @@ class ApiController {
 
     }
 
+    //delete student
     async deleteStudent(req, res) {
         try {
             const id = req.params.id
@@ -128,5 +139,58 @@ class ApiController {
             })
         }
     }
+
+
+
+    async getdataSlugStudent(req, res) {
+        try {
+            const slug = req.params.slug
+            const getData = await Student.find({ slug: slug })
+            if (getData) {
+                return res.status(200).json({
+                    status: true,
+                    message: 'get student',
+                    data: getData
+                })
+            } else {
+                return res.status(400).json({
+                    status: false,
+                    message: 'student not found',
+                })
+            }
+        } catch (error) {
+            console.log(error.message);
+
+        }
+    }
+
+
+
+
+    async search(req,res){
+        try{
+            let query={}
+            if(req.body.search){
+                const search=req.body.search
+                query={
+                    //name:{$regex:search, $options:'i'}
+                    $or:[
+                        {name:{$regex:search, $options:'i'}},
+                        {city:{$regex:search, $options:'i'}}
+                    ]
+                }
+            }
+            const stu=await Student.find(query)
+            return res.status(200).json({
+                status:true,
+                message:'get student',
+                data:stu
+            })
+
+        }catch(error){
+
+        }
+    }
 }
+
 module.exports = new ApiController();

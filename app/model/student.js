@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
   const StudentSchema=  new Schema({
         name:{
             type:String,
-            required:true
+            required:[true,"please enter your name"],  
         },
         city:{
             type:String,
@@ -14,6 +14,14 @@ const Schema = mongoose.Schema
             type:String,
             required:true
         },
+        image:{
+            type:String,
+            required:true
+        },
+        slug:{
+            type:String,
+            required:true
+        }
     },
     {
         timestamps:true,
