@@ -12,36 +12,26 @@
   </head>
   <body>
    <div class="container">
-    <h1>Get All User</h1>
-    <% if(message.length>0){ %>
-        <p class="bg-success"><%=message%></p>
-        <%}%>
-    <a href="/add" class="btn btn-info">Add User</a>
-    <table class="table  mt-5">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Phone</th>
-            <th colspan="2">Action</th>
-          </tr>
-        </thead>
-        <% for(let item of data) {%>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td><%=item.name%></td>
-            <td><%=item.email%></td>
-            <td><%=item.phone%></td>
-            <td><a href="/edit/user/<%=item._id%>" class="btn btn-success">Update</a></td>
-            <td><a href="/delete/user/<%=item._id%>" class="btn btn-danger"> Delete</a></td>
-          </tr>
-         
-        </tbody>
-
-        <%}%>
-      </table>
+    <h1> Add User</h1>
+    <form action="/create/user" method="post">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Name</label>
+          <input type="text" class="form-control" name="name">
+          
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email</label>
+          <input type="email" class="form-control" name="email" >
+          
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Phone</label>
+          <input type="text" class="form-control" name="phone">
+        </div>
+       
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+   
    </div>
 
  
