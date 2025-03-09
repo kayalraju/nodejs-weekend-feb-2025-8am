@@ -12,6 +12,9 @@ router.post('/update/user/:id',HomeController.updateUser);
 router.get('/delete/user/:id',HomeController.deleteUser);
 
 
+router.post('/joi',HomeController.joivalidate);
+
+
 
 
 

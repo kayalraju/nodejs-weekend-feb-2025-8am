@@ -41,12 +41,14 @@ app.use(express.json({
     limit:'50mb',
     extended:true
 }));
+app.use(express.urlencoded({extended:true}))
 //static folder
 app.use(express.static('public'));
 
 app.use('uploads',express.static(path.join(__dirname,'/uploads')))
 app.use('/uploads',express.static('uploads'));  
-app.use(express.urlencoded({extended:true}))
+
+
 
 const homeRoute=require('./app/router/homeRouter')
 app.use(homeRoute);
@@ -54,6 +56,8 @@ app.use(homeRoute);
 const apiRoute=require('./app/router/ApiRoute')
 app.use('/api',apiRoute);
 
+const csvRoute=require('./app/router/csvRouter')
+app.use(csvRoute);
 const port=3005;
 
 app.listen(port,()=>{

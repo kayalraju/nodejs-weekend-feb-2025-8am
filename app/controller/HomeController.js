@@ -1,10 +1,39 @@
-const User = require('../model/user')  
+
+const {UserModel, UserSchemaValidation}=require('../model/user')
 
 class HomeController {
 
+    //for joi validate api
+
+    async joivalidate(req,res){
+        const data={
+            name:req.body.name,
+            email:req.body.email,
+            phone:req.body.phone
+        }
+        const {error,value}=UserSchemaValidation.validate(data)
+        if(error){
+            return res.status(401).json({
+                message:error.details[0].message
+            })
+        }else{
+            const usr=await UserModel.create(value)
+            return res.status(200).json({
+                message:'User Created Successfully',
+                data:usr
+            })
+        }
+
+    }
+
+
+
+
+
+
     async home(req,res){
         try{
-            const data=await User.find()
+            const data=await UserModel.find()
             const message=req.flash('message')
             res.render('home',{
                 title:'Home Page',
@@ -32,12 +61,12 @@ class HomeController {
        
         try{
             const {name,email,phone}=req.body
-            const user=new User({
+            const user=new UserModel({
                 name,
                 email,
                 phone
             })
-           const data= await user.save()
+           const data= await UserModel.save()
            console.log('user',data);
            
            if(data){
@@ -58,7 +87,7 @@ class HomeController {
     async editUser(req,res){
         try{
             const id=req.params.id
-            const data=await User.findById(id)
+            const data=await UserModel.findById(id)
             res.render('update',{
                 title:'edit Page',
                 data:data
@@ -76,7 +105,7 @@ class HomeController {
         try{
             const id=req.params.id
             const {name,email,phone}=req.body
-            const data=await User.findByIdAndUpdate(id,{
+            const data=await UserModel.findByIdAndUpdate(id,{
                 name,
                 email,
                 phone
@@ -99,7 +128,7 @@ class HomeController {
     async deleteUser(req,res){
         try{
             const id=req.params.id
-           const data=await User.findByIdAndDelete(id)
+           const data=await UserModel.findByIdAndDelete(id)
            if(data){
                 req.flash('message','user delete successfully')
                 res.redirect('/')
