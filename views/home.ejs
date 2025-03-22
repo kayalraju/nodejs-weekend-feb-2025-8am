@@ -24,6 +24,7 @@
             <th scope="col">Name</th>
             <th scope="col">Email</th>
             <th scope="col">Phone</th>
+            <th scope="col">image</th>
             <th colspan="2">Action</th>
           </tr>
         </thead>
@@ -34,6 +35,7 @@
             <td><%=item.name%></td>
             <td><%=item.email%></td>
             <td><%=item.phone%></td>
+            <td><img src="" alt="img" height="100px" width="100px"></td>
             <td><a href="/edit/user/<%=item._id%>" class="btn btn-success">Update</a></td>
             <td><a href="/delete/user/<%=item._id%>" class="btn btn-danger"> Delete</a></td>
           </tr>

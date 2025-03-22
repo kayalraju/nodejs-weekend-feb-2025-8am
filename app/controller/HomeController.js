@@ -1,5 +1,7 @@
-
 const {UserModel, UserSchemaValidation}=require('../model/user')
+const path = require('path')
+const fs = require('fs')
+
 
 class HomeController {
 
@@ -58,7 +60,9 @@ class HomeController {
     }
 
     async createUser(req,res){
-       
+      
+        
+        
         try{
             const {name,email,phone}=req.body
             const user=new UserModel({
@@ -66,7 +70,11 @@ class HomeController {
                 email,
                 phone
             })
+            
            const data= await UserModel.save()
+           if (req.file) {
+            data.image = req.file.path
+        }
            console.log('user',data);
            
            if(data){

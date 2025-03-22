@@ -7,6 +7,7 @@ const cors=require('cors');
 const session=require('express-session');
 const flash=require('connect-flash');
 const cookieParser=require('cookie-parser');
+const bodyParser=require('body-parser');
 
 dotenv.config();
 const app=express();
@@ -14,6 +15,8 @@ connectDB()
 
 app.use(cors());
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(session({
     secret: 'keyboardcat',
     resave: false,
@@ -58,6 +61,9 @@ app.use('/api',apiRoute);
 
 const csvRoute=require('./app/router/csvRouter')
 app.use(csvRoute);
+
+const authRoute=require('./app/router/authRouter')
+app.use('/auth',authRoute);
 const port=3005;
 
 app.listen(port,()=>{
