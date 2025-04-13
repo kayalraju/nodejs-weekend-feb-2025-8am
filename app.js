@@ -64,6 +64,9 @@ app.use(csvRoute);
 
 const authRoute=require('./app/router/authRouter')
 app.use('/auth',authRoute);
+
+const authEjsRoute=require('./app/router/authEjsRoute')
+app.use(authEjsRoute);
 const port=3005;
 
 app.listen(port,()=>{
