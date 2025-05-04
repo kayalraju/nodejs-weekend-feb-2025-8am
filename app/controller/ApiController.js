@@ -39,7 +39,23 @@ class ApiController {
     //get student
     async getStudent(req, res) {
         try {
-            const getStudent = await Student.find()
+            const getStudent = await Student.aggregate([
+                {
+                    $project: {
+                        __v: 0,    
+                    }
+                },
+                {
+                    $sort: {
+                        createdAt: -1
+                    }
+                },
+                {
+                    $addFields: {
+                        myname: "pritam"
+                    }
+                }
+            ])
             if (getStudent) {
                 return res.status(200).json({
                     status: true,

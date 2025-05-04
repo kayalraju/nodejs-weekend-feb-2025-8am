@@ -67,7 +67,12 @@ app.use('/auth',authRoute);
 
 const authEjsRoute=require('./app/router/authEjsRoute')
 app.use(authEjsRoute);
+
+const  lookupRoute=require('./app/router/Lookuproute')
+app.use(lookupRoute);
+
 const port=3005;
+
 
 app.listen(port,()=>{
     console.log('server is running on port 3005');

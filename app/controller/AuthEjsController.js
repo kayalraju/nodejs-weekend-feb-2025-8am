@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 
 class AuthEjsController {
 
+    constructor() {
+    }
     async CheckAuth(req, res, next) {
         try {
             if (req.user) {
